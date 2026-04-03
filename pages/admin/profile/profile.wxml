@@ -1,0 +1,49 @@
+<view class="container">
+  <view class="card-header">
+    <view class="admin-avatar">思同</view>
+    <view class="admin-meta">
+      <text class="name">系统管理员</text>
+      <text class="id">工号：112345</text>
+    </view>
+  </view>
+
+  <!-- 点击以下项可跳转 -->
+  <view class="card stat-container">
+    <view class="stat-box" bindtap="goList" data-status="approved">
+      <view class="num blue">{{totalApprove}}</view>
+      <view class="label">已发布房源 ></view>
+    </view>
+    <view class="stat-box" bindtap="goList" data-status="rejected">
+      <view class="num red">{{totalReject}}</view>
+      <view class="label">已拦截信息 ></view>
+    </view>
+  </view>
+
+  <view class="card menu">
+    <view class="menu-item" bindtap="goList" data-status="pending">
+      <text>待审核任务流</text>
+      <text class="badge">{{totalPending}}</text>
+    </view>
+    <view class="menu-item" bindtap="logout">退出管理终端</view>
+  </view>
+
+  <view class="tab-bar">
+    <view class="tab-item" bindtap="navTo" data-url="/pages/admin/index/index">房源中心</view>
+    <view class="tab-item active">我的</view>
+  </view>
+</view>
+<!-- 在原有 card 渲染之前或之后添加 -->
+<view class="card music-player {{isPlaying ? 'playing' : ''}}" bindtap="toggleMusic">
+  <view class="music-icon">
+    <text class="iconfont {{isPlaying ? 'icon-pause' : 'icon-play'}}">♪</text>
+  </view>
+  <view class="music-info">
+    <text class="song-name">工作背景音：起风了</text>
+    <text class="song-status">{{isPlaying ? '正在播放...' : '已暂停'}}</text>
+  </view>
+  <view class="music-animation" wx:if="{{isPlaying}}">
+    <view class="bar"></view>
+    <view class="bar"></view>
+    <view class="bar"></view>
+  </view>
+</view>

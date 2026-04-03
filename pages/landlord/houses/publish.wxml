@@ -1,0 +1,75 @@
+<view class="container">
+  <view class="header">
+    <text class="back-btn" bindtap="goBack">←</text>
+    <text class="title">发布新房源</text>
+  </view>
+
+  <scroll-view class="form-container" scroll-y>
+    <view class="form-group">
+      <text class="label">房源标题*</text>
+      <input class="input" placeholder="请输入房源标题" 
+             value="{{form.title}}" bindinput="onInput" data-field="title" />
+    </view>
+
+    <view class="form-group">
+      <text class="label">房源价格*</text>
+      <input class="input" placeholder="请输入月租价格" type="number"
+             value="{{form.price}}" bindinput="onInput" data-field="price" />
+    </view>
+
+    <view class="form-group">
+      <text class="label">房源面积*</text>
+      <input class="input" placeholder="请输入面积(平方米)" type="number"
+             value="{{form.area}}" bindinput="onInput" data-field="area" />
+    </view>
+
+    <view class="form-group">
+      <text class="label">户型*</text>
+      <view class="row-inputs">
+        <input class="input-small" placeholder="室" type="number"
+               value="{{form.bedroom}}" bindinput="onInput" data-field="bedroom" />
+        <text class="separator">室</text>
+        <input class="input-small" placeholder="厅" type="number"
+               value="{{form.livingroom}}" bindinput="onInput" data-field="livingroom" />
+        <text class="separator">厅</text>
+      </view>
+    </view>
+
+    <view class="form-group">
+      <text class="label">所在区域*</text>
+      <input class="input" placeholder="请输入所在区域"
+             value="{{form.district}}" bindinput="onInput" data-field="district" />
+    </view>
+
+    <view class="form-group">
+      <text class="label">详细地址</text>
+      <input class="input" placeholder="请输入详细地址"
+             value="{{form.address}}" bindinput="onInput" data-field="address" />
+    </view>
+
+    <view class="form-group">
+      <text class="label">房源描述</text>
+      <textarea class="textarea" placeholder="请描述房源特色、配套设施等"
+                value="{{form.description}}" bindinput="onInput" data-field="description" />
+    </view>
+
+    <view class="form-group">
+      <text class="label">联系人</text>
+      <input class="input" placeholder="请输入联系人姓名"
+             value="{{form.contactName}}" bindinput="onInput" data-field="contactName" />
+    </view>
+
+    <view class="form-group">
+      <text class="label">联系电话</text>
+      <input class="input" placeholder="请输入联系电话" type="number"
+             value="{{form.contactPhone}}" bindinput="onInput" data-field="contactPhone" />
+    </view>
+  </scroll-view>
+
+  <view class="action-bar">
+    <button class="btn-save" bindtap="saveAsDraft" 
+            disabled="{{isSubmitting}}">保存草稿</button>
+    <button class="btn-submit" bindtap="submitHouse" 
+            disabled="{{isSubmitting}}">立即发布</button>
+  </view>
+</view>

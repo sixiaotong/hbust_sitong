@@ -1,0 +1,72 @@
+<view class="container">
+  <view class="header">
+    <text class="back-btn" bindtap="goBack">←</text>
+    <text class="title">房源详情</text>
+  </view>
+
+  <view class="card">
+    <view class="house-images">
+      <swiper indicator-dots autoplay interval="3000">
+        <swiper-item wx:for="{{house.images || []}}" wx:key="index">
+          <image src="{{item}}" mode="aspectFill"></image>
+        </swiper-item>
+      </swiper>
+    </view>
+
+    <view class="house-info">
+      <view class="house-title">{{house.title}}</view>
+      <view class="house-price">
+        <text class="price">¥{{house.price}}</text>
+        <text class="unit">/月</text>
+      </view>
+      
+      <view class="house-meta">
+        <text>{{house.area}}㎡</text>
+        <text>·</text>
+        <text>{{house.bedroom}}室{{house.livingroom}}厅</text>
+        <text>·</text>
+        <text>{{house.district}}</text>
+      </view>
+      
+      <view class="house-status status-{{getStatusValue(house.status)}}">
+        {{getStatusText(house.status)}}
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="section-title">房源信息</view>
+    <view class="info-grid">
+      <view class="info-item">
+        <text class="label">房源编号</text>
+        <text class="value">{{house.id}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">发布时间</text>
+        <text class="value">{{house.publishTime || house.createTime}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">最后更新</text>
+        <text class="value">{{house.updateTime || house.createTime}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">联系人</text>
+        <text class="value">{{house.contactName || '未设置'}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">联系电话</text>
+        <text class="value">{{house.contactPhone || '未设置'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="card" wx:if="{{house.description}}">
+    <view class="section-title">房源描述</view>
+    <view class="description">{{house.description}}</view>
+  </view>
+
+  <view class="action-buttons">
+    <button class="btn-edit" bindtap="editHouse">编辑房源</button>
+    <button class="btn-delete" bindtap="deleteHouse">删除房源</button>
+  </view>
+</view>

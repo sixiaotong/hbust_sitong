@@ -1,0 +1,118 @@
+<view class="profile-container">
+  <!-- 用户信息卡片 -->
+  <view class="user-card">
+    <view class="user-header">
+      <view class="avatar">👤</view>
+      <view class="user-info">
+        <view class="username">尊敬的租户，欢迎您！</view>
+        <view class="user-status">VIP会员 · 信用良好</view>
+      </view>
+    </view>
+    <view class="stats-grid">
+      <view class="stat-item">
+        <view class="stat-value">{{orders.length}}</view>
+        <view class="stat-label">我的订单</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value">{{favs.length}}</view>
+        <view class="stat-label">我的收藏</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value">0</view>
+        <view class="stat-label">待付款</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 我的订单 -->
+  <view class="section-card">
+    <view class="section-header">
+      <view class="section-title">
+        <text class="title-icon">📋</text>
+        <text class="title-text">我的订单</text>
+      </view>
+      <view class="section-action" bindtap="goOrderList">查看全部 ></view>
+    </view>
+    
+    <view wx:if="{{orders.length > 0}}" class="order-list">
+      <view wx:for="{{orders}}" wx:key="index" class="order-item">
+        <view class="order-content">
+          <view class="order-title">{{item.title}}</view>
+          <view class="order-time">
+            <text class="time-icon">🕒</text>
+            {{item.time}}
+          </view>
+          <view class="order-status status-active">进行中</view>
+        </view>
+        <view class="order-arrow">→</view>
+      </view>
+    </view>
+    
+    <view wx:else class="empty-state">
+      <view class="empty-icon">📭</view>
+      <view class="empty-text">暂无订单记录</view>
+      <view class="empty-hint">去看看房源吧</view>
+    </view>
+  </view>
+
+  <!-- 我的收藏 -->
+  <view class="section-card">
+    <view class="section-header">
+      <view class="section-title">
+        <text class="title-icon">⭐</text>
+        <text class="title-text">我的收藏夹</text>
+      </view>
+      <view class="section-action" bindtap="goFavList">查看全部 ></view>
+    </view>
+    
+    <view wx:if="{{favs.length > 0}}" class="fav-grid">
+      <view wx:for="{{favs}}" wx:key="index" class="fav-item">
+        <view class="fav-icon">🏠</view>
+        <view class="fav-info">
+          <view class="fav-title">{{item.title}}</view>
+          <view class="fav-price">¥{{item.price}}/月</view>
+        </view>
+        <view class="fav-tag">已收藏</view>
+      </view>
+    </view>
+    
+    <view wx:else class="empty-state">
+      <view class="empty-icon">⭐</view>
+      <view class="empty-text">暂无收藏房源</view>
+      <view class="empty-hint">快去发现喜欢的房子吧</view>
+    </view>
+  </view>
+
+  <!-- 功能入口 -->
+  <view class="function-grid">
+    <view class="func-item">
+      <view class="func-icon">📱</view>
+      <view class="func-label">联系客服</view>
+    </view>
+    <view class="func-item">
+      <view class="func-icon">⚙️</view>
+      <view class="func-label">设置</view>
+    </view>
+    <view class="func-item">
+      <view class="func-icon">📖</view>
+      <view class="func-label">使用帮助</view>
+    </view>
+  </view>
+
+  <!-- 退出按钮 -->
+  <button class="logout-btn" bindtap="logout">
+    <text class="logout-icon">🚪</text>
+    <text class="logout-text">退出/切换登录</text>
+  </button>
+</view>
+
+<view class="tab-bar">
+  <view class="tab-item {{activeTab === 'index' ? 'active' : ''}}" bindtap="goIndex">
+    <view class="tab-icon">🏠</view>
+    <view class="tab-label">首页</view>
+  </view>
+  <view class="tab-item {{activeTab === 'profile' ? 'active' : ''}}">
+    <view class="tab-icon">👤</view>
+    <view class="tab-label">我的</view>
+  </view>
+</view>

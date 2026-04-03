@@ -1,0 +1,18 @@
+<view class="container">
+  <view class="card">
+    <text class="label">房源概要</text>
+    <view class="title">{{h.title}}</view>
+    <view class="price">意向租金：￥{{h.price}}</view>
+    <view class="desc">{{h.desc}}</view>
+  </view>
+
+  <view class="card">
+    <text class="label">驳回理由 (仅拒绝时填写)</text>
+    <textarea class="reason-input" placeholder="请输入驳回具体原因..." bindinput="inputReason" value="{{reason}}" />
+  </view>
+
+  <view class="bottom-btns">
+    <button class="btn-reject" bindtap="doAudit" data-res="rejected">驳回申请</button>
+    <button class="btn-approve" bindtap="doAudit" data-res="approved">通过审核</button>
+  </view>
+</view>

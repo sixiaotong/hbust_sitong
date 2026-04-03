@@ -1,0 +1,31 @@
+<view class="container" style="padding: 30rpx;">
+  <form bindsubmit="formSubmit">
+    <view class="card">
+      <view class="form-item">
+        <text>房源标题</text>
+        <input name="title" placeholder="如：静安区温馨二居室" />
+      </view>
+      <view class="form-item">
+        <text>租金 (元/月)</text>
+        <input name="price" type="number" placeholder="金额" />
+      </view>
+      <view class="form-item">
+        <text>面积 (㎡)</text>
+        <input name="area" type="number" placeholder="面积" />
+      </view>
+      <view class="form-item">
+        <text>户型</text>
+        <input name="type" placeholder="如：二室一厅" />
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="form-item-column">
+        <text>详情描述</text>
+        <textarea name="desc" placeholder="请输入房屋详细介绍..." />
+      </view>
+    </view>
+
+    <button class="btn-primary" form-type="submit" style="background:#007AFF; color:#fff; margin-top:40rpx;">提交审核</button>
+  </form>
+</view>

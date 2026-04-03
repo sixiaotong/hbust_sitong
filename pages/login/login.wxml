@@ -1,0 +1,177 @@
+<view class="login-container">
+  <!-- 背景装饰元素 -->
+  <view class="bg-decoration">
+    <view class="circle circle-1"></view>
+    <view class="circle circle-2"></view>
+    <view class="circle circle-3"></view>
+    <view class="circle circle-4"></view>
+    <view class="shape shape-1"></view>
+    <view class="shape shape-2"></view>
+  </view>
+  
+  <view class="header">
+    <view class="logo-wrapper">
+      <view class="logo-icon">🏠</view>
+      <view class="logo-text">
+        <view class="logo-main">Hbust房产</view>
+        <view class="logo-sub">思同的小程序</view>
+      </view>
+    </view>
+    <view class="welcome-text">欢迎回来</view>
+  </view>
+  
+  <view class="login-box" wx:if="{{showLoginForm}}">
+    <view class="login-header">
+      <view class="role-tag">
+        <text class="role-icon">{{roleIcons[selectedRole]}}</text>
+        <text class="role-name">{{roleNames[selectedRole]}}登录</text>
+      </view>
+      <view class="progress-dots">
+        <view class="dot active"></view>
+        <view class="dot"></view>
+      </view>
+    </view>
+    
+    <view class="form-container">
+      <view class="form-group animate-slideup">
+        <view class="input-wrapper">
+          <text class="input-icon">👤</text>
+          <input 
+            class="form-input" 
+            type="number" 
+            placeholder="请输入账号" 
+            value="{{username}}" 
+            bindinput="onUsernameInput"
+            maxlength="20"
+          />
+          <view class="input-line"></view>
+        </view>
+        
+        <view class="input-wrapper">
+          <text class="input-icon">🔒</text>
+          <input 
+            class="form-input" 
+            password 
+            placeholder="请输入密码" 
+            value="{{password}}" 
+            bindinput="onPasswordInput"
+            maxlength="20"
+          />
+          <view class="input-line"></view>
+          <view class="password-toggle" bindtap="togglePassword">
+            <text>{{showPassword ? '🙈' : '👁️'}}</text>
+          </view>
+        </view>
+        
+        <view class="quick-login-btn" bindtap="fillTestAccount">
+          <view class="test-badge">TEST</view>
+          <text>使用测试账号登录</text>
+          <text class="test-account">账号:777 密码:1234567</text>
+        </view>
+      </view>
+      
+      <button 
+        class="btn-login gradient-btn" 
+        bindtap="handleLogin"
+        hover-class="btn-hover"
+        disabled="{{!username || !password}}"
+      >
+        <text class="btn-text">立即登录</text>
+        <text class="btn-icon">→</text>
+      </button>
+      
+      <view class="back-to-role" bindtap="goBackToRoleSelect">
+        <text class="back-icon">←</text>
+        <text>选择其他身份</text>
+      </view>
+    </view>
+  </view>
+  
+  <view class="role-select-box" wx:if="{{!showLoginForm}}">
+    <view class="section-header">
+      <view class="section-title">选择身份开始</view>
+      <view class="section-subtitle">请选择您的角色以继续</view>
+    </view>
+    
+    <view class="role-cards">
+      <view 
+        class="role-card tenant-card" 
+        bindtap="selectRole" 
+        data-role="tenant"
+        hover-class="card-hover"
+      >
+        <view class="card-bg"></view>
+        <view class="card-content">
+          <view class="card-icon">👤</view>
+          <view class="card-info">
+            <view class="card-title">租户</view>
+            <view class="card-desc">查找理想房源，开启舒适生活</view>
+            <view class="card-features">
+              <text class="feature">🏠 海量房源</text>
+              <text class="feature">📅 在线预约</text>
+              <text class="feature">📄 电子签约</text>
+            </view>
+          </view>
+          <view class="select-arrow">→</view>
+        </view>
+      </view>
+      
+      <view 
+        class="role-card landlord-card" 
+        bindtap="selectRole" 
+        data-role="landlord"
+        hover-class="card-hover"
+      >
+        <view class="card-bg"></view>
+        <view class="card-content">
+          <view class="card-icon">🏠</view>
+          <view class="card-info">
+            <view class="card-title">房东</view>
+            <view class="card-desc">轻松管理房源，收益稳定增长</view>
+            <view class="card-features">
+              <text class="feature">📱 快速发布</text>
+              <text class="feature">💰 租金管理</text>
+              <text class="feature">📊 数据统计</text>
+            </view>
+          </view>
+          <view class="select-arrow">→</view>
+        </view>
+      </view>
+      
+      <view 
+        class="role-card admin-card" 
+        bindtap="selectRole" 
+        data-role="admin"
+        hover-class="card-hover"
+      >
+        <view class="card-bg"></view>
+        <view class="card-content">
+          <view class="card-icon">🔍</view>
+          <view class="card-info">
+            <view class="card-title">审核员</view>
+            <view class="card-desc">维护平台秩序，保障交易安全</view>
+            <view class="card-features">
+              <text class="feature">✅ 房源审核</text>
+              <text class="feature">🛡️ 风险控制</text>
+              <text class="feature">⚖️ 纠纷处理</text>
+            </view>
+          </view>
+          <view class="select-arrow">→</view>
+        </view>
+      </view>
+    </view>
+    
+    <view class="hint-box">
+      <text class="hint-icon">💡</text>
+      <text class="hint-text">初次使用？所有角色均可使用测试账号登录体验</text>
+    </view>
+  </view>
+  
+  <view class="footer">
+    <view class="footer-wave">
+      <view class="wave"></view>
+    </view>
+    <text class="footer-text">Hbust房产 · 提供专业房产服务</text>
+    <text class="footer-copyright">© 2024 思同的小程序 V1.0</text>
+  </view>
+</view>

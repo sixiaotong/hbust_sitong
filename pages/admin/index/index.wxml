@@ -1,0 +1,31 @@
+<view class="container">
+  <!-- 顶部状态切换栏 -->
+  <view class="status-tabs">
+    <view class="tab {{currentTab === 'pending' ? 'active' : ''}}" bindtap="switchTab" data-status="pending">待审核</view>
+    <view class="tab {{currentTab === 'approved' ? 'active' : ''}}" bindtap="switchTab" data-status="approved">已发布</view>
+    <view class="tab {{currentTab === 'rejected' ? 'active' : ''}}" bindtap="switchTab" data-status="rejected">已拦截</view>
+  </view>
+
+  <scroll-view scroll-y class="list-area">
+    <view class="card admin-card {{currentTab}}" wx:for="{{displayList}}" wx:key="id" bindtap="goReview" data-id="{{item.id}}">
+      <image class="h-img" src="{{item.image || item.images[0]}}" mode="aspectFill" />
+      <view class="h-info">
+        <view class="h-name">{{item.title}}</view>
+        <view class="h-tags">{{item.type}} | ￥{{item.price}}</view>
+        <view class="h-landlord">房东ID：{{item.landlordId}}</view>
+        <!-- 拒绝原因预览 -->
+        <view wx:if="{{currentTab === 'rejected'}}" class="reason-tag">理由：{{item.refuseReason}}</view>
+      </view>
+      <view class="action-btn">查看/编辑</view>
+    </view>
+    
+    <view wx:if="{{displayList.length === 0}}" class="empty-state">
+      <view>该分类下暂无房源</view>
+    </view>
+  </scroll-view>
+
+  <view class="tab-bar">
+    <view class="tab-item active">房源中心</view>
+    <view class="tab-item" bindtap="navTo" data-url="/pages/admin/profile/profile">我的</view>
+  </view>
+</view>

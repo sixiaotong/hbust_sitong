@@ -1,0 +1,48 @@
+<view class="container">
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">←</view>
+    <view class="title">我的收藏</view>
+  </view>
+  
+  <view class="favorite-list">
+    <view wx:if="{{favorites.length === 0}}" class="empty">
+      <view class="empty-icon">⭐</view>
+      <view class="empty-text">暂无收藏</view>
+      <view class="empty-hint">收藏您喜欢的房源，方便随时查看</view>
+      <button class="btn" bindtap="goToHouse">去发现好房</button>
+    </view>
+    
+    <view wx:else>
+      <view wx:for="{{favorites}}" wx:key="index" class="favorite-item">
+        <view class="item-header">
+          <text class="item-title">{{item.title}}</text>
+          <text class="item-price">¥{{item.price}}/月</text>
+        </view>
+        
+        <view class="item-info">
+          <view class="info-row">
+            <text class="label">面积：</text>
+            <text class="value">{{item.area || '--'}}㎡</text>
+          </view>
+          <view class="info-row">
+            <text class="label">户型：</text>
+            <text class="value">{{item.layout || '--'}}</text>
+          </view>
+          <view class="info-row">
+            <text class="label">地址：</text>
+            <text class="value address">{{item.address || '--'}}</text>
+          </view>
+        </view>
+        
+        <view class="item-actions">
+          <button class="btn-view" bindtap="viewHouse" data-id="{{item.id}}">
+            查看房源
+          </button>
+          <button class="btn-remove" bindtap="removeFavorite" data-id="{{item.id}}">
+            移除
+          </button>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

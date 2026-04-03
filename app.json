@@ -1,0 +1,24 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/tenant/index/index",
+    "pages/tenant/detail/detail",
+    "pages/tenant/profile/profile",
+    "pages/landlord/index/index",
+    "pages/landlord/submit/submit",
+    "pages/landlord/profile/profile",
+    "pages/admin/index/index",
+    "pages/admin/review/review",
+    "pages/admin/profile/profile",
+    "pages/tenant/order/list/list",
+    "pages/tenant/favorite/list/list",
+    "pages/landlord/houses/detail",
+    "pages/landlord/houses/records",
+    "pages/landlord/houses/publish"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#007AFF",
+    "navigationBarTitleText": "思同 房屋租赁",
+    "navigationBarTextStyle": "white"
+  }
+}

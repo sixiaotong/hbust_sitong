@@ -1,0 +1,140 @@
+<view class="container">
+  <!-- 用户信息头部 -->
+  <view class="card user-header">
+    <view class="avatar">房</view>
+    <view class="u-info">
+      <view class="u-name">房东用户_001</view>
+      <view class="u-role">实名认证房东</view>
+      <view class="publish-info">已发布 <text class="highlight">{{totalCount}}</text> 套房源</view>
+    </view>
+  </view>
+
+  <!-- 数据统计卡片 -->
+  <view class="card stats-card">
+    <view class="stats-header">
+      <text class="stats-title">房源发布统计</text>
+      <text class="subtitle">实时更新</text>
+    </view>
+    
+    <view class="stats-grid">
+      <view class="stat-item" bindtap="showDetail" data-type="total">
+        <view class="stat-value">{{totalCount}}</view>
+        <view class="stat-label">累计发布</view>
+        <view class="stat-trend" wx:if="{{trend > 0}}">
+          ↑ 较上月增长 {{trend}}%
+        </view>
+      </view>
+      
+      <view class="stat-item" bindtap="showDetail" data-type="active">
+        <view class="stat-value">{{activeCount}}</view>
+        <view class="stat-label">在租中</view>
+        <view class="stat-subtext">{{activePercent}}% 在租率</view>
+      </view>
+      
+      <view class="stat-item" bindtap="showDetail" data-type="pending">
+        <view class="stat-value">{{pendingCount}}</view>
+        <view class="stat-label">待审核</view>
+        <view class="stat-subtext">审核中房源</view>
+      </view>
+      
+      <view class="stat-item" bindtap="showDetail" data-type="offline">
+        <view class="stat-value">{{offlineCount}}</view>
+        <view class="stat-label">已下架</view>
+        <view class="stat-subtext">历史房源</view>
+      </view>
+    </view>
+    
+    <view class="stats-footer">
+      <text>最近更新：{{lastUpdateTime}}</text>
+    </view>
+  </view>
+
+  <!-- 发布记录列表 -->
+  <view class="card list">
+    <view class="list-header">
+      <text>发布记录</text>
+      <text class="see-all" bindtap="navToRecords">查看全部 ></text>
+    </view>
+    
+    <view class="recent-list">
+      <block wx:for="{{recentPublishes}}" wx:key="index">
+        <view class="record-item" bindtap="viewHouseDetail" data-id="{{item.id}}">
+          <view class="record-info">
+            <text class="house-title">{{item.title}}</text>
+            <text class="house-meta">{{item.area}}㎡ · {{item.district}}</text>
+            <text class="publish-time">{{item.publishTime}}</text>
+          </view>
+          <view class="record-status status-{{item.status}}">
+            {{item.statusText}}
+          </view>
+        </view>
+      </block>
+    </view>
+    
+    <view class="list-item" bindtap="navToPublish">
+      <text>发布新房源</text>
+      <text class="arrow">+</text>
+    </view>
+  </view>
+
+  <!-- 功能列表 -->
+  <view class="card list">
+    <view class="list-item" bindtap="navTo" data-url="/pages/landlord/houses/list">
+      <text>房源管理</text>
+      <text class="val">{{totalCount}} 套</text>
+    </view>
+    
+    <view class="list-item" bindtap="showDataChart">
+      <text>数据报表</text>
+      <text class="arrow">📊</text>
+    </view>
+    
+    <view class="list-item">
+      <text>系统设置</text>
+      <text class="arrow">></text>
+    </view>
+    
+    <view class="list-item">
+      <text>关于 XSimple</text>
+      <text class="arrow">></text>
+    </view>
+  </view>
+
+  <!-- 退出按钮 -->
+  <view class="btn-out-container">
+    <button class="btn-out" bindtap="logout">退出并切换账号</button>
+  </view>
+
+  <!-- Tab栏 -->
+  <view class="tab-bar">
+    <view class="tab-item" bindtap="navTo" data-url="/pages/landlord/index/index">
+      <text class="tab-icon">🏠</text>
+      <text>房源管理</text>
+    </view>
+    <view class="tab-item active">
+      <text class="tab-icon">👤</text>
+      <text>我的</text>
+    </view>
+  </view>
+</view>
+
+<!-- 统计数据弹窗 -->
+<view class="modal" wx:if="{{showStatsModal}}">
+  <view class="modal-content">
+    <view class="modal-header">
+      <text>{{modalTitle}}详情</text>
+      <text class="close" bindtap="hideModal">×</text>
+    </view>
+    <view class="modal-body">
+      <!-- 根据不同type显示不同的详情内容 -->
+      <block wx:if="{{modalType === 'total'}}">
+        <view class="detail-item">累计发布房源总数</view>
+        <view class="detail-value">{{totalCount}} 套</view>
+        <view class="detail-chart">
+          <!-- 这里可以放图表 -->
+        </view>
+      </block>
+      <!-- 其他类型的详情 -->
+    </view>
+  </view>
+</view>

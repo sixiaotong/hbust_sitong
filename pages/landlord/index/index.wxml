@@ -1,0 +1,33 @@
+<view class="container">
+  <view class="header">
+    <text class="title">我的房源管理</text>
+    <button class="add-btn" bindtap="goSubmit">+ 发布新房源</button>
+  </view>
+
+  <scroll-view scroll-y class="list-area">
+    <view class="card" wx:for="{{myHouses}}" wx:key="id">
+      <view class="house-main">
+        <image class="cover" src="{{item.image || item.images[0]}}" mode="aspectFill" />
+        <view class="info">
+          <view class="name">{{item.title}}</view>
+          <view class="price">￥{{item.price}}/月</view>
+          <!-- 状态标签 -->
+          <view class="status {{item.status}}">
+            {{item.status === 'approved' ? '已发布' : (item.status === 'pending' ? '审核中' : '已拒绝')}}
+          </view>
+        </view>
+      </view>
+      <!-- 如果被拒绝，显示原因 -->
+      <view wx:if="{{item.status === 'rejected'}}" class="refuse-box">
+        原因：{{item.refuseReason || '资料不全'}}
+      </view>
+    </view>
+    <view wx:if="{{myHouses.length === 0}}" class="empty">暂无房源，请点击上方发布</view>
+  </scroll-view>
+
+  <!-- 底部导航 -->
+  <view class="tab-bar">
+    <view class="tab-item active">房源管理</view>
+    <view class="tab-item" bindtap="navTo" data-url="/pages/landlord/profile/profile">我的</view>
+  </view>
+</view>

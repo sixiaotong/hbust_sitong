@@ -1,0 +1,51 @@
+<view class="container">
+  <view class="header">
+    <text class="back-btn" bindtap="goBack">←</text>
+    <text class="title">发布记录</text>
+  </view>
+
+  <view class="filter-bar">
+    <view class="filter-item {{currentFilter === 'all' ? 'active' : ''}}" 
+          bindtap="setFilter" data-filter="all">
+      全部 ({{totalCount}})
+    </view>
+    <view class="filter-item {{currentFilter === 'active' ? 'active' : ''}}" 
+          bindtap="setFilter" data-filter="active">
+      在租中 ({{activeCount}})
+    </view>
+    <view class="filter-item {{currentFilter === 'pending' ? 'active' : ''}}" 
+          bindtap="setFilter" data-filter="pending">
+      待审核 ({{pendingCount}})
+    </view>
+  </view>
+
+  <scroll-view class="records-list" scroll-y>
+    <block wx:for="{{filteredHouses}}" wx:key="id">
+      <view class="record-card" bindtap="viewDetail" data-id="{{item.id}}">
+        <view class="record-header">
+          <text class="house-title">{{item.title}}</text>
+          <text class="status status-{{getStatusValue(item.status)}}">
+            {{getStatusText(item.status)}}
+          </text>
+        </view>
+        
+        <view class="record-info">
+          <text class="info-item">{{item.area}}㎡</text>
+          <text class="info-item">{{item.bedroom}}室{{item.livingroom}}厅</text>
+          <text class="info-item">{{item.district}}</text>
+        </view>
+        
+        <view class="record-footer">
+          <text class="price">¥{{item.price}}/月</text>
+          <text class="time">{{formatTime(item.publishTime || item.createTime)}}</text>
+        </view>
+      </view>
+    </block>
+    
+    <view class="empty" wx:if="{{filteredHouses.length === 0}}">
+      <text>暂无发布记录</text>
+    </view>
+  </scroll-view>
+
+  <button class="btn-add" bindtap="addNewHouse">+ 发布新房源</button>
+</view>

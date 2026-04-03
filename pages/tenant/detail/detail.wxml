@@ -1,0 +1,157 @@
+<!-- pages/tenant/detail/detail.wxml -->
+<view class="detail-container">
+  <!-- 房源图片轮播 -->
+  <swiper class="house-swiper" indicator-dots="{{true}}" autoplay="{{true}}" interval="3000">
+    <swiper-item wx:for="{{house.images || []}}" wx:key="index">
+      <image 
+        src="{{item}}" 
+        mode="aspectFill" 
+        class="swiper-image"
+        bindtap="previewImage"
+        data-index="{{index}}"
+      />
+    </swiper-item>
+  </swiper>
+
+  <!-- 房源基本信息 -->
+  <view class="info-card">
+    <view class="price-section">
+      <text class="price-main">¥{{house.price}}</text>
+      <text class="price-unit">/月</text>
+      <view class="tag-list">
+        <view class="tag" wx:if="{{house.type}}">{{house.type}}</view>
+        <view class="tag" wx:if="{{house.area}}">{{house.area}}㎡</view>
+        <view class="tag" wx:if="{{house.floor}}">{{house.floor}}</view>
+      </view>
+    </view>
+    
+    <view class="title-section">
+      <text class="house-title">{{house.title}}</text>
+      <view class="action-buttons">
+        <view class="action-btn" bindtap="shareHouse">
+          <text class="action-icon">↻</text>
+          <text class="action-text">分享</text>
+        </view>
+        <view class="action-btn {{isCollected ? 'active' : ''}}" bindtap="toggleFavorite">
+          <text class="action-icon">{{isCollected ? '❤️' : '🤍'}}</text>
+          <text class="action-text">{{isCollected ? '已收藏' : '收藏'}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <view class="location-section" bindtap="copyAddress">
+      <text class="location-icon">📍</text>
+      <text class="location-text">{{house.address || '暂无地址信息'}}</text>
+      <text class="copy-btn">复制</text>
+    </view>
+  </view>
+
+  <!-- 房源详情 -->
+  <view class="detail-card">
+    <view class="section-title">
+      <text class="title-icon">🏠</text>
+      <text>房源详情</text>
+    </view>
+    <view class="detail-grid">
+      <view class="detail-item">
+        <text class="item-icon">🛏️</text>
+        <text class="item-label">户型</text>
+        <text class="item-value">{{house.layout || '暂无'}}</text>
+      </view>
+      <view class="detail-item">
+        <text class="item-icon">🧭</text>
+        <text class="item-label">朝向</text>
+        <text class="item-value">{{house.orientation || '暂无'}}</text>
+      </view>
+      <view class="detail-item">
+        <text class="item-icon">📅</text>
+        <text class="item-label">装修</text>
+        <text class="item-value">{{house.decoration || '暂无'}}</text>
+      </view>
+      <view class="detail-item">
+        <text class="item-icon">✅</text>
+        <text class="item-label">特色</text>
+        <text class="item-value">{{house.features || '暂无'}}</text>
+      </view>
+    </view>
+    
+    <view class="description">
+      <text class="desc-label">房源描述：</text>
+      <text class="desc-content">{{house.description || '暂无描述'}}</text>
+    </view>
+  </view>
+
+  <!-- 用户评论 -->
+  <view class="comment-card">
+    <view class="section-title">
+      <text class="title-icon">💬</text>
+      <text>用户评价 ({{house.comments ? house.comments.length : 0}})</text>
+    </view>
+    
+    <view wx:if="{{house.comments && house.comments.length > 0}}" class="comment-list">
+      <view wx:for="{{house.comments}}" wx:key="index" class="comment-item">
+        <view class="comment-header">
+          <view class="user-avatar">👤</view>
+          <view class="user-info">
+            <text class="user-name">{{item.user || '112345'}}</text>
+            <text class="comment-time">{{item.time}}</text>
+          </view>
+        </view>
+        <view class="comment-content">{{item.content}}</view>
+      </view>
+    </view>
+    
+    <view wx:else class="empty-comments">
+      <text class="empty-icon">💬</text>
+      <text class="empty-text">暂无评价，快来发表第一条评论吧</text>
+    </view>
+    
+    <!-- 发表评论 -->
+    <view class="comment-input-box">
+      <input 
+        class="comment-input"
+        placeholder="写下您的评价..."
+        value="{{comment}}"
+        bindinput="onCommentInput"
+        maxlength="200"
+      />
+      <button 
+        class="send-btn {{comment ? 'active' : ''}}" 
+        bindtap="sendComment"
+        disabled="{{!comment}}"
+      >
+        发送
+      </button>
+    </view>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar">
+    <view class="contact-btn" bindtap="contactLandlord">
+      <text class="contact-icon">📞</text>
+      <text class="contact-text">联系房东</text>
+    </view>
+    <button class="order-btn" bindtap="makeReservation">
+      <text class="order-icon">📝</text>
+      <text class="order-text">立即预订</text>
+    </button>
+  </view>
+
+  <!-- 分享面板 -->
+  <view wx:if="{{showShare}}" class="share-mask" bindtap="closeShare">
+    <view class="share-panel" catchtap="stopPropagation">
+      <view class="share-title">分享到</view>
+      <view class="share-options">
+        <button class="share-option" open-type="share">
+          <text class="share-icon">👥</text>
+          <text class="share-text">微信好友</text>
+        </button>
+        <view class="share-option" bindtap="copyLink">
+          <text class="share-icon">🔗</text>
+          <text class="share-text">复制链接</text>
+        </view>
+      </view>
+      <view class="share-cancel" bindtap="closeShare">取消</view>
+    </view>
+  </view>
+</view>
