@@ -1,0 +1,14 @@
+-------------------------------------------------------------------------------
+Test set: com.hbust.JwtTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.334 s <<< FAILURE! -- in com.hbust.JwtTest
+com.hbust.JwtTest.testParseJwt -- Time elapsed: 0.037 s <<< ERROR!
+io.jsonwebtoken.ExpiredJwtException: JWT expired at 2026-04-28T15:07:21Z. Current time: 2026-05-03T16:16:48Z, a difference of 436167189 milliseconds.  Allowed clock skew: 0 milliseconds.
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:385)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:481)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parseClaimsJws(DefaultJwtParser.java:541)
+	at com.hbust.JwtTest.testParseJwt(JwtTest.java:32)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+

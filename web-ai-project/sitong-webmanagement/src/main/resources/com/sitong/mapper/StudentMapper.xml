@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hbust.mapper.StudentMapper">
+
+    <!-- 条件分页查询学员列表 -->
+    <select id="findByCondition" resultType="com.hbust.pojo.Student">
+        SELECT
+        s.id,
+        s.name,
+        s.no,
+        s.gender,
+        s.phone,
+        s.id_card,
+        s.is_college,
+        s.address,
+        s.degree,
+        s.graduation_date,
+        s.clazz_id,
+        s.violation_count,
+        s.violation_score,
+        s.create_time,
+        s.update_time,
+        c.name AS clazz_name
+        FROM student s
+        LEFT JOIN clazz c ON s.clazz_id = c.id
+        <where>
+            <if test="name != null and name != ''">
+                AND s.name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="clazzId != null">
+                AND s.clazz_id = #{clazzId}
+            </if>
+            <if test="gender != null">
+                AND s.gender = #{gender}
+            </if>
+            <if test="degree != null">
+                AND s.degree = #{degree}
+            </if>
+        </where>
+        ORDER BY s.id DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <!-- 统计满足条件的学员总数 -->
+    <select id="countByCondition" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM student s
+        <where>
+            <if test="name != null and name != ''">
+                AND s.name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="clazzId != null">
+                AND s.clazz_id = #{clazzId}
+            </if>
+            <if test="gender != null">
+                AND s.gender = #{gender}
+            </if>
+            <if test="degree != null">
+                AND s.degree = #{degree}
+            </if>
+        </where>
+    </select>
+
+
+    <!-- 批量删除学员 -->
+    <delete id="deleteByIds">
+        DELETE FROM student
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- 统计指定ID列表的学员数量 -->
+    <select id="countByIds" resultType="int">
+        SELECT COUNT(*)
+        FROM student
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+
+    <!-- 根据学号查询学员 -->
+    <select id="selectByNo" resultType="com.hbust.pojo.Student">
+        SELECT id, name, no, phone, id_card, gender, clazz_id
+        FROM student
+        WHERE no = #{no}
+    </select>
+
+    <!-- 根据身份证号查询学员 -->
+    <select id="selectByIdCard" resultType="com.hbust.pojo.Student">
+        SELECT id, name, no, phone, id_card, gender, clazz_id
+        FROM student
+        WHERE id_card = #{idCard}
+    </select>
+
+    <!-- 插入学员 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO student (
+            name, no, gender, phone, id_card, is_college,
+            address, degree, graduation_date, clazz_id,
+            violation_count, violation_score, create_time, update_time
+        ) VALUES (
+                     #{name}, #{no}, #{gender}, #{phone}, #{idCard}, #{isCollege},
+                     #{address}, #{degree}, #{graduationDate}, #{clazzId},
+                     #{violationCount}, #{violationScore}, #{createTime}, #{updateTime}
+                 )
+    </insert>
+
+</mapper>
