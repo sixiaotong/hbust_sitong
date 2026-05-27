@@ -1,0 +1,1 @@
+import{r as o}from"./request-zHB_H1F1.js";function t(e){return o.post("/auth/login",e)}function a(e){return o.post("/auth/register",e)}function l(){localStorage.removeItem("token"),localStorage.removeItem("userId"),localStorage.removeItem("username"),localStorage.removeItem("avatar")}export{l as a,t as l,a as r};
